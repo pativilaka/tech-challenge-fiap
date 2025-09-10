@@ -1,4 +1,4 @@
-package br.com.fiap.TechChallenge;
+package br.com.fiap.techchallenge;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
