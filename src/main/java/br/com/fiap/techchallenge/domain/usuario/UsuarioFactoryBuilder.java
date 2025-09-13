@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public final class UsuarioFactoryBuilder {
 
-    private Long id; // opcional (pode vir do banco)
+    private Long id;
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;
