@@ -31,7 +31,7 @@ public final class Endereco {
         validar();
     }
 
-    public static Endereco novoEdereco(
+    public static Endereco novoEndereco(
             String logradouro,
             String numero,
             String bairro,

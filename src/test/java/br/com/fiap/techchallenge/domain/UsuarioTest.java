@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class UsuarioTest {
 
     private Endereco enderecoValido() {
-        return Endereco.novoEdereco(
+        return Endereco.novoEndereco(
                 "Rua A", "123", "Bairro B", "São Paulo", "SP", "01234-567", "Apto 1"
         );
     }
@@ -168,7 +168,7 @@ public class UsuarioTest {
     @DisplayName("alterarEndereco: sucesso")
     void alterarEndereco_sucesso() {
         var usuario = builderValido().build();
-        var novo = Endereco.novoEdereco("Rua X","1","Bairro Y","SP","SP","11111-111","");
+        var novo = Endereco.novoEndereco("Rua X","1","Bairro Y","SP","SP","11111-111","");
 
         usuario.alterarEndereco(novo);
 
