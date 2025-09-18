@@ -50,9 +50,7 @@ public class Usuario {
         DomainValidation.notNull(dataNascimento, "dataNascimento");
         DomainValidation.email(email, "email");
         DomainValidation.telefone(telefone, "telefone");
-        DomainValidation.notBlank(login, "login");
         DomainValidation.minLength(senha, 6, "senha");
-        DomainValidation.notNull(endereco, "endereco");
         DomainValidation.notNull(tipoUsuario, "tipo do usuário");
     }
 
