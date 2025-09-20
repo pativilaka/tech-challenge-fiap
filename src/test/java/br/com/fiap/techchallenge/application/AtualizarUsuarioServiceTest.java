@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.application;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
-import br.com.fiap.techchallenge.application.comum.NotFoundExceptiion;
+import br.com.fiap.techchallenge.application.comum.NotFoundException;
 import br.com.fiap.techchallenge.application.dto.AtualizarUsuarioRequestApp;
 import br.com.fiap.techchallenge.application.dto.EnderecoApp;
 import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
@@ -45,7 +45,7 @@ public class AtualizarUsuarioServiceTest {
                 .id(5L).nome("Antigo").cpf("123.456.789-00").dataNascimento(LocalDate.of(1990,1,1))
                 .email("old@ex.com").telefone("11 3456-7890").login("login").senha("xpto12")
                 .endereco(Endereco.novoEndereco("R","1","B","C","SP","00000-000",null))
-                .tipoUsuario(TipoUsuario.PACIENTE).build();
+                .tipoUsuario(TipoUsuario.PACIENTE).planoSaude("Básico").build();
 
         when(repository.findById(5L)).thenReturn(Optional.of(existente));
         when(repository.update(any(Usuario.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -54,13 +54,12 @@ public class AtualizarUsuarioServiceTest {
                 5L, "Novo Nome", null, null, "novo@ex.com",
                 "11 3456-9999", null, "123456",
                 new EnderecoApp("Nova","2","B2","C2","SP","00000-000",null),
-                TipoUsuario.MEDICO
+                TipoUsuario.PACIENTE, null, null, null, "Premium"
         );
 
 
         service.execute(req);
 
-        // Assert
         verify(repository).findById(5L);
         verify(repository).update(argThat(u ->
                 u.getId().equals(5L) &&
@@ -68,7 +67,7 @@ public class AtualizarUsuarioServiceTest {
                         u.getEmail().equals("novo@ex.com") &&
                         u.getTelefone().equals("11 3456-9999") &&
                         u.getSenha().equals("123456") &&
-                        u.getTipoUsuario() == TipoUsuario.MEDICO &&
+                        u.getTipoUsuario() == TipoUsuario.PACIENTE &&
                         u.getEndereco().getLogradouro().equals("Nova")
         ));
         verify(presenter).present(any(UsuarioResponseApp.class));
@@ -78,8 +77,8 @@ public class AtualizarUsuarioServiceTest {
     @Test
     void deveLancarNotFoundQuandoNaoExiste() {
         when(repository.findById(99L)).thenReturn(Optional.empty());
-        var req = new AtualizarUsuarioRequestApp(99L, null,null,null,null,null,null,null,null,null);
-        assertThrows(NotFoundExceptiion.class, () -> service.execute(req));
+        var req = new AtualizarUsuarioRequestApp(99L, null,null,null,null,null,null,null,null,null, null, null, null,null);
+        assertThrows(NotFoundException.class, () -> service.execute(req));
         verify(repository).findById(99L);
         verifyNoMoreInteractions(repository);
         verifyNoInteractions(presenter);

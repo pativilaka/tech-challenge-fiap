@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.application.service;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
-import br.com.fiap.techchallenge.application.comum.NotFoundExceptiion;
+import br.com.fiap.techchallenge.application.comum.NotFoundException;
 import br.com.fiap.techchallenge.application.mappers.UsuarioMapper;
 import br.com.fiap.techchallenge.application.ports.in.IBuscarUsuarioPorId;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
@@ -23,8 +23,8 @@ public class BuscarUsuarioPorIdService implements IBuscarUsuarioPorId {
 
         if (id == null) throw new ApplicationException("Id não pode ser nulo.");
 
-        Usuario usuario = repository.findById(id).orElseThrow(() -> new NotFoundExceptiion(
-                "Usuário d% não encontrado." .formatted(id)));
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new NotFoundException(
+                "Usuário %d não encontrado.".formatted(id)));
 
         presenter.present(UsuarioMapper.toApp(usuario));
 

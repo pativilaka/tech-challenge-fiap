@@ -14,6 +14,10 @@ public record AtualizarUsuarioRequestApp(
         String login,
         String senha,
         EnderecoApp endereco,
-        TipoUsuario tipoUsuario
+        TipoUsuario tipoUsuario,
+        String crm,
+        String especialidade,
+        String coren,
+        String planoSaude
 ) {
 }

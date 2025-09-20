@@ -1,13 +1,12 @@
 package br.com.fiap.techchallenge.application;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
-import br.com.fiap.techchallenge.application.comum.NotFoundExceptiion;
+import br.com.fiap.techchallenge.application.comum.NotFoundException;
 import br.com.fiap.techchallenge.application.dto.EnderecoApp;
 import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
 import br.com.fiap.techchallenge.application.service.BuscarUsuarioPorIdService;
-import br.com.fiap.techchallenge.application.service.CriarUsuarioService;
 import br.com.fiap.techchallenge.domain.comum.Endereco;
 import br.com.fiap.techchallenge.domain.usuario.TipoUsuario;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;
@@ -50,6 +49,7 @@ public class BuscarUsuarioPorIdServiceTest {
                 .senha("123456")
                 .endereco(Endereco.novoEndereco("Rua A","10","Centro","São Paulo","SP","01000-000", null))
                 .tipoUsuario(TipoUsuario.PACIENTE)
+                .planoSaude("Básico")
                 .build();
 
         when(repository.findById(42L)).thenReturn(Optional.of(existente));
@@ -70,6 +70,7 @@ public class BuscarUsuarioPorIdServiceTest {
         assertEquals("11 99999-9999", resp.telefone());
         assertEquals("patricia", resp.login());
         assertEquals(TipoUsuario.PACIENTE, resp.tipoUsuario());
+        assertEquals("Básico", resp.planoSaude());
 
         EnderecoApp e = resp.endereco();
         assertNotNull(e);
@@ -97,7 +98,7 @@ public class BuscarUsuarioPorIdServiceTest {
         when(repository.findById(99L)).thenReturn(Optional.empty());
 
         // Act + Assert
-        assertThrows(NotFoundExceptiion.class, () -> service.execute(99L));
+        assertThrows(NotFoundException.class, () -> service.execute(99L));
 
         verify(repository, times(1)).findById(99L);
         verifyNoMoreInteractions(repository);

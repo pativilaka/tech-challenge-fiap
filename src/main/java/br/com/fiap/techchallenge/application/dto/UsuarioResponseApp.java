@@ -13,7 +13,11 @@ public record UsuarioResponseApp(
         String telefone,
         String login,
         EnderecoApp endereco,
-        TipoUsuario tipoUsuario
+        TipoUsuario tipoUsuario,
+        String crm,
+        String especialidade,
+        String coren,
+        String planoSaude
 ) {
 
 

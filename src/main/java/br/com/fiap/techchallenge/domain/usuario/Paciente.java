@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge.domain.comum.Endereco;
 import java.time.LocalDate;
 
 public class Paciente extends Usuario{
+
     private String planoSaude;
 
     Paciente(Long id, String nome, String cpf, LocalDate dataNascimento,
