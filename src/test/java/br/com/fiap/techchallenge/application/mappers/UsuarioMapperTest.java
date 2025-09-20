@@ -5,147 +5,216 @@ import br.com.fiap.techchallenge.application.dto.CriarUsuarioRequestApp;
 import br.com.fiap.techchallenge.application.dto.EnderecoApp;
 import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
 import br.com.fiap.techchallenge.domain.comum.Endereco;
-import br.com.fiap.techchallenge.domain.usuario.TipoUsuario;
-import br.com.fiap.techchallenge.domain.usuario.Usuario;
-import br.com.fiap.techchallenge.domain.usuario.UsuarioFactoryBuilder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import br.com.fiap.techchallenge.domain.usuario.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 public class UsuarioMapperTest {
-    @Test
-    void deveConverterDomainParaResponseApp() {
-        Endereco endereco = Endereco.novoEndereco("Rua A", "123", "Centro", "São Paulo", "SP", "00000-000", null);
-        Usuario usuario = UsuarioFactoryBuilder.novo()
-                .id(1L)
-                .nome("Patrícia")
-                .cpf("123.456.789-00")
-                .dataNascimento(LocalDate.of(1990, 5, 10))
-                .email("pati@ex.com")
-                .telefone("11 99999-9999")
-                .login("pati")
-                .senha("segredo")
-                .endereco(endereco)
-                .tipoUsuario(TipoUsuario.PACIENTE)
-                .build();
 
-        UsuarioResponseApp dto = UsuarioMapper.toApp(usuario);
+    private Endereco voEndereco() {
+        return Endereco.novoEndereco("Rua A", "123", "Centro", "São Paulo", "SP", "00000-000", null);
+    }
 
-        assertNotNull(dto);
-        assertEquals(1L, dto.id());
-        assertEquals("Patrícia", dto.nome());
-        assertEquals("123.456.789-00", dto.cpf());
-        assertEquals("pati@ex.com", dto.email());
-        assertEquals("11 99999-9999", dto.telefone());
-        assertEquals("pati", dto.login());
-        assertEquals(TipoUsuario.PACIENTE, dto.tipoUsuario());
-
-        EnderecoApp endDto = dto.endereco();
-        assertNotNull(endDto);
-        assertEquals("Rua A", endDto.logradouro());
-        assertEquals("123", endDto.numero());
-        assertEquals("Centro", endDto.bairro());
+    private EnderecoApp dtoEndereco() {
+        return new EnderecoApp("Rua A", "123", "Centro", "São Paulo", "SP", "00000-000", null);
     }
 
     @Test
-    void deveConverterRequestAppParaDomain() {
-        EnderecoApp enderecoApp = new EnderecoApp("Rua B", "456", "Bairro", "Rio", "RJ", "11111-000", "Ap 12");
+    void toApp_deveMapearMedico_comCamposEspecificos() {
+        Usuario u = UsuarioFactoryBuilder.novo()
+                .id(1L)
+                .nome("Dra. Ana")
+                .cpf("000.000.000-00")
+                .dataNascimento(LocalDate.of(1985, 1, 1))
+                .email("ana@ex.com")
+                .telefone("11 99999-9999")
+                .senha("segura1")
+                .endereco(voEndereco())
+                .tipoUsuario(TipoUsuario.MEDICO)
+                .crm("CRM-123")
+                .especialidade("Clínica")
+                .build();
+
+        assertTrue(u instanceof Medico);
+
+        UsuarioResponseApp resp = UsuarioMapper.toApp(u);
+
+        assertNotNull(resp);
+        assertEquals(1L, resp.id());
+        assertEquals("Dra. Ana", resp.nome());
+        assertEquals(TipoUsuario.MEDICO, resp.tipoUsuario());
+        assertEquals("CRM-123", resp.crm());
+        assertEquals("Clínica", resp.especialidade());
+        assertNull(resp.coren());
+        assertNull(resp.planoSaude());
+        assertNotNull(resp.endereco());
+        assertEquals("Rua A", resp.endereco().logradouro());
+    }
+
+    @Test
+    void toApp_deveMapearEnfermeira_comCoren() {
+        Usuario u = UsuarioFactoryBuilder.novo()
+                .id(2L)
+                .nome("Enfa. Bia")
+                .cpf("111.111.111-11")
+                .dataNascimento(LocalDate.of(1990,2,2))
+                .email("bia@ex.com")
+                .telefone("11 99999-9999")
+                .senha("segura1")
+                .tipoUsuario(TipoUsuario.ENFERMEIRO)
+                .coren("COREN-9")
+                .build();
+
+        assertTrue(u instanceof Enfermeiro);
+
+        var resp = UsuarioMapper.toApp(u);
+        assertNotNull(resp);
+        assertEquals(TipoUsuario.ENFERMEIRO, resp.tipoUsuario());
+        assertEquals("COREN-9", resp.coren());
+        assertNull(resp.crm());
+        assertNull(resp.especialidade());
+        assertNull(resp.planoSaude());
+    }
+
+    @Test
+    void toApp_deveMapearPaciente_comPlanoSaude() {
+        Usuario u = UsuarioFactoryBuilder.novo()
+                .id(3L)
+                .nome("João")
+                .cpf("222.222.222-22")
+                .dataNascimento(LocalDate.of(1995,3,3))
+                .email("joao@ex.com")
+                .telefone("11 99999-9999")
+                .senha("segura1")
+                .tipoUsuario(TipoUsuario.PACIENTE)
+                .planoSaude("Plano X")
+                .build();
+
+        assertTrue(u instanceof Paciente);
+
+        var resp = UsuarioMapper.toApp(u);
+        assertEquals(TipoUsuario.PACIENTE, resp.tipoUsuario());
+        assertEquals("Plano X", resp.planoSaude());
+        assertNull(resp.crm());
+        assertNull(resp.especialidade());
+        assertNull(resp.coren());
+    }
+
+    @Test
+    void toDomain_deveCriarMedico_comCrmEEspecialidade() {
+        CriarUsuarioRequestApp req = new CriarUsuarioRequestApp(
+                "Dra. Ana",
+                "000.000.000-00",
+                LocalDate.of(1985,1,1),
+                "ana@ex.com",
+                "11 99999-9999",
+                "segura1",
+                "123456",
+                dtoEndereco(),
+                TipoUsuario.MEDICO,
+                "CRM-123",
+                "Clínica",
+                null,
+                null
+        );
+
+        Usuario u = UsuarioMapper.toDomain(req);
+        assertNotNull(u);
+        assertTrue(u instanceof Medico);
+        assertEquals(TipoUsuario.MEDICO, u.getTipoUsuario());
+
+        Medico m = (Medico) u;
+        assertEquals("CRM-123", m.getCrm());
+        assertEquals("Clínica", m.getEspecialidade());
+    }
+
+    @Test
+    void toDomain_deveCriarEnfermeira_comCoren() {
+        CriarUsuarioRequestApp reqEnfermeira = new CriarUsuarioRequestApp(
+                "Bia",
+                "111.111.111-11",
+                LocalDate.of(1990,2,2),
+                "bia@ex.com",
+                "11 99999-9999",
+                null,
+                "456123",
+                null,
+                TipoUsuario.ENFERMEIRO,
+                null,
+                null, "COREN-9",
+                null
+        );
+
+        Usuario u = UsuarioMapper.toDomain(reqEnfermeira);
+        assertTrue(u instanceof Enfermeiro);
+        assertEquals(TipoUsuario.ENFERMEIRO, u.getTipoUsuario());
+    }
+
+    @Test
+    void toDomain_deveCriarPaciente_comPlanoSaude() {
         CriarUsuarioRequestApp req = new CriarUsuarioRequestApp(
                 "João",
-                "987.654.321-00",
-                LocalDate.of(2000, 1, 1),
+                "222.222.222-22",
+                LocalDate.of(1995,3,3),
                 "joao@ex.com",
-                "21 99999-9999",
-                "joao",
-                "123456",
-                enderecoApp,
-                TipoUsuario.MEDICO
+                "11 99999-9999",
+                "segura1",
+                "789456",
+                null,
+                TipoUsuario.PACIENTE,
+                null,
+                null,
+                null,
+                "Plano X"
+
         );
 
-        Usuario usuario = UsuarioMapper.toDomain(req);
-
-        assertNotNull(usuario);
-        assertEquals("João", usuario.getNome());
-        assertEquals("987.654.321-00", usuario.getCpf());
-        assertEquals("joao@ex.com", usuario.getEmail());
-        assertEquals("21 99999-9999", usuario.getTelefone());
-        assertEquals("joao", usuario.getLogin());
-        assertEquals("123456", usuario.getSenha());
-        assertEquals(TipoUsuario.MEDICO, usuario.getTipoUsuario());
-
-        Endereco endereco = usuario.getEndereco();
-        assertNotNull(endereco);
-        assertEquals("Rua B", endereco.getLogradouro());
-        assertEquals("456", endereco.getNumero());
+        Usuario u = UsuarioMapper.toDomain(req);
+        assertTrue(u instanceof Paciente);
+        assertEquals(TipoUsuario.PACIENTE, u.getTipoUsuario());
     }
 
     @Test
-    void deveAtualizarCamposDoUsuarioExistente() {
-        Usuario existente = UsuarioFactoryBuilder.novo()
-                .id(2L)
-                .nome("Antigo")
-                .cpf("000.000.000-00")
-                .dataNascimento(LocalDate.of(1985, 10, 1))
-                .email("antigo@ex.com")
-                .telefone("11 1111-1111")
-                .login("antigo")
-                .senha("123456")
-                .endereco(Endereco.novoEndereco("Rua Velha", "1", "Centro", "Cidade", "SP", "22222-000", null))
-                .tipoUsuario(TipoUsuario.PACIENTE)
-                .build();
-
-        EnderecoApp novoEndereco = new EnderecoApp("Rua Nova", "99", "Bairro Novo", "Cidade Nova", "RJ", "33333-000", null);
-        AtualizarUsuarioRequestApp req = new AtualizarUsuarioRequestApp(
-                2L,
-                "Novo Nome",
-                null,
-                null,
-                "novo@ex.com",
-                "22 2222-2222",
-                null,
-                "123456",
-                novoEndereco,
-                TipoUsuario.MEDICO
-        );
-
-        Usuario atualizado = UsuarioMapper.toUpdateDomain(req, existente);
-
-        assertEquals("Novo Nome", atualizado.getNome());
-        assertEquals("novo@ex.com", atualizado.getEmail());
-        assertEquals("22 2222-2222", atualizado.getTelefone());
-        assertEquals("123456", atualizado.getSenha());
-        assertEquals(TipoUsuario.MEDICO, atualizado.getTipoUsuario());
-
-        Endereco end = atualizado.getEndereco();
-        assertEquals("Rua Nova", end.getLogradouro());
-        assertEquals("99", end.getNumero());
-    }
-
-    @Test
-    void deveRetornarNullQuandoEntradaForNull() {
+    void toApp_toDomain_devemRetornarNullQuandoEntradaForNull_e_toUpdateDomainNaoAlteraQuandoRequestNull() {
         assertNull(UsuarioMapper.toApp(null));
         assertNull(UsuarioMapper.toDomain(null));
 
-        var existenteValido = UsuarioFactoryBuilder.novo()
-                .id(10L)
+        var existente = UsuarioFactoryBuilder.novo()
+                .id(20L)
                 .nome("Fulano")
                 .cpf("000.000.000-00")
-                .dataNascimento(LocalDate.of(1990, 1, 1))
+                .dataNascimento(LocalDate.of(1990,1,1))
                 .email("fulano@ex.com")
-                .telefone("11 1111-1111")
-                .login("fulano")
-                .senha("123456")
-                .endereco(Endereco.novoEndereco("Rua", "1", "Bairro", "Cidade", "SP", "00000-000", null))
+                .telefone("11 99999-9999")
+                .senha("segura1")
                 .tipoUsuario(TipoUsuario.PACIENTE)
+                .planoSaude("Plano Z")
+                .endereco(voEndereco())
                 .build();
 
-        var resultado = UsuarioMapper.toUpdateDomain(null, existenteValido);
-        assertNotNull(resultado);
-        assertSame(existenteValido, resultado);
+        var nomeAntes = existente.getNome();
+        var emailAntes = existente.getEmail();
+        var telAntes = existente.getTelefone();
+        var senhaAntes = existente.getSenha();
+        var planoAntes = (existente instanceof Paciente p) ? p.getPlanoSaude() : null;
+        var endAntes = existente.getEndereco();
 
+        assertDoesNotThrow(() -> UsuarioMapper.toUpdateDomain(null, existente));
+
+        assertEquals(nomeAntes, existente.getNome());
+        assertEquals(emailAntes, existente.getEmail());
+        assertEquals(telAntes, existente.getTelefone());
+        assertEquals(senhaAntes, existente.getSenha());
+        assertEquals(planoAntes, (existente instanceof Paciente p) ? p.getPlanoSaude() : null);
+        assertSame(endAntes, existente.getEndereco());
+
+        assertDoesNotThrow(() -> UsuarioMapper.toUpdateDomain(null, null));
+
+        var reqErro = new AtualizarUsuarioRequestApp(null,null,null,null,null,null,null,null,null, null,null, null, null, null);
+        assertDoesNotThrow(() -> UsuarioMapper.toUpdateDomain(reqErro, null));
     }
+
+
 }

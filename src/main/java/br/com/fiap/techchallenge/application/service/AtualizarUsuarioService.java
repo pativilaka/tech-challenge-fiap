@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.application.service;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
-import br.com.fiap.techchallenge.application.comum.NotFoundExceptiion;
+import br.com.fiap.techchallenge.application.comum.NotFoundException;
 import br.com.fiap.techchallenge.application.dto.AtualizarUsuarioRequestApp;
 import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
 import br.com.fiap.techchallenge.application.mappers.UsuarioMapper;
@@ -25,12 +25,12 @@ public class AtualizarUsuarioService implements IAtualizarUsuario {
 
         if(requestApp == null) throw new ApplicationException("Request não poode ser nulo!");
 
-        Usuario usuario = repository.findById(requestApp.id()).orElseThrow(() -> new NotFoundExceptiion(
-                "Usuário %d não encontrado." .formatted(requestApp.id())));
-
-        usuario = repository.update(usuario);
+        Usuario usuario = repository.findById(requestApp.id())
+                .orElseThrow(() -> new NotFoundException("Usuário %d não encontrado.".formatted(requestApp.id())));
 
         UsuarioMapper.toUpdateDomain(requestApp, usuario);
+        usuario = repository.update(usuario);
+
         UsuarioResponseApp responseApp = UsuarioMapper.toApp(usuario);
         presenter.present(responseApp);
 

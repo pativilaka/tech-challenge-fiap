@@ -41,14 +41,14 @@ public class CriarUsuarioServiceTest {
                 "Patrícia","123.456.789-00", LocalDate.of(1982,5,10),
                 "pati@ex.com","11 3456-7890","pati","123456",
                 new EnderecoApp("Rua","10","Bairro","Cidade","SP","00000-000",null),
-                TipoUsuario.PACIENTE
+                TipoUsuario.PACIENTE, null, null, null, "Básico"
         );
 
         var dominioSalvo = UsuarioFactoryBuilder.novo()
                 .id(1L).nome(req.nome()).cpf(req.cpf()).dataNascimento(req.dataNascimento())
                 .email(req.email()).telefone(req.telefone()).login(req.login()).senha(req.senha())
                 .endereco(Endereco.novoEndereco("Rua","10","Bairro","Cidade","SP","00000-000",null))
-                .tipoUsuario(req.tipoUsuario()).build();
+                .tipoUsuario(req.tipoUsuario()).planoSaude(req.planoSaude()).build();
 
         when(repository.save(any(Usuario.class))).thenReturn(dominioSalvo);
 

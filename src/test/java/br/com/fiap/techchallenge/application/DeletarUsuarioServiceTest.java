@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.application;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
-import br.com.fiap.techchallenge.application.comum.NotFoundExceptiion;
+import br.com.fiap.techchallenge.application.comum.NotFoundException;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
 import br.com.fiap.techchallenge.application.service.DeletarUsuarioService;
@@ -36,7 +36,7 @@ public class DeletarUsuarioServiceTest {
     @Test
     void deveLancarQuandoFalse() {
         when(repository.deleteById(8L)).thenReturn(false);
-        assertThrows(NotFoundExceptiion.class, () -> service.execute(8L));
+        assertThrows(NotFoundException.class, () -> service.execute(8L));
     }
 
     @Test
