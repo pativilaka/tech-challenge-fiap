@@ -9,7 +9,10 @@ import br.com.fiap.techchallenge.application.ports.in.IAtualizarUsuario;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class AtualizarUsuarioService implements IAtualizarUsuario {
 
     private final IUsuarioRepository repository;
@@ -20,8 +23,9 @@ public class AtualizarUsuarioService implements IAtualizarUsuario {
         this.presenter = presenter;
     }
 
+    @Transactional
     @Override
-    public void execute(AtualizarUsuarioRequestApp requestApp) {
+    public void execute(Long id, AtualizarUsuarioRequestApp requestApp) {
 
         if(requestApp == null) throw new ApplicationException("Request não poode ser nulo!");
 

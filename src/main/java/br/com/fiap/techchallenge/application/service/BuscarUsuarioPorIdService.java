@@ -7,7 +7,10 @@ import br.com.fiap.techchallenge.application.ports.in.IBuscarUsuarioPorId;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class BuscarUsuarioPorIdService implements IBuscarUsuarioPorId {
 
     private final IUsuarioRepository repository;
@@ -18,6 +21,7 @@ public class BuscarUsuarioPorIdService implements IBuscarUsuarioPorId {
         this.presenter = presenter;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void execute(Long id) {
 

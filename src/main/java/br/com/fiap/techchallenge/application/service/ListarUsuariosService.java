@@ -6,9 +6,12 @@ import br.com.fiap.techchallenge.application.mappers.UsuarioMapper;
 import br.com.fiap.techchallenge.application.ports.in.IListarUsuarios;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class ListarUsuariosService implements IListarUsuarios {
 
     private final IUsuarioRepository repository;
@@ -19,6 +22,7 @@ public class ListarUsuariosService implements IListarUsuarios {
         this.presenter = presenter;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void execute() {
 
