@@ -40,4 +40,10 @@ public final class DomainValidation {
             throw new DomainException("Campo '" + campo + "' não é um telefone válido.");
         }
     }
+
+    public static void registros(Long idMedico, Long idPaciente){
+        if (idMedico != null && idMedico.equals(idPaciente)){
+            throw new DomainException("O registro do médico não pode ser o mesmo registro do paciente.");
+        }
+    }
 }
