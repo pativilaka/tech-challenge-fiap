@@ -4,6 +4,6 @@ import br.com.fiap.techchallenge.application.dto.AtualizarUsuarioRequestApp;
 
 public interface IAtualizarUsuario {
 
-    void execute(AtualizarUsuarioRequestApp requestApp);
+    void execute(Long id, AtualizarUsuarioRequestApp requestApp);
 
 }

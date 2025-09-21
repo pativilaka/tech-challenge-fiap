@@ -8,7 +8,10 @@ import br.com.fiap.techchallenge.application.ports.in.ICriarUsuario;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class CriarUsuarioService implements ICriarUsuario {
 
     private final IUsuarioRepository repository;
@@ -20,6 +23,7 @@ public class CriarUsuarioService implements ICriarUsuario {
     }
 
 
+    @Transactional
     @Override
     public void execute(CriarUsuarioRequestApp requestApp) {
 

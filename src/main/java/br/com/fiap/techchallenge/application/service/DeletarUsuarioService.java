@@ -5,7 +5,10 @@ import br.com.fiap.techchallenge.application.comum.NotFoundException;
 import br.com.fiap.techchallenge.application.ports.in.IDeletarUsuario;
 import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class DeletarUsuarioService implements IDeletarUsuario {
 
     private final IUsuarioRepository repository;
@@ -16,6 +19,7 @@ public class DeletarUsuarioService implements IDeletarUsuario {
         this.presenter = presenter;
     }
 
+    @Transactional
     @Override
     public void execute(Long id) {
         if(id == null) throw new ApplicationException("Id não pode ser nulo");

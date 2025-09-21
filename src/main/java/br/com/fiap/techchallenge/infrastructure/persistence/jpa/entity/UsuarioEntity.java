@@ -40,6 +40,7 @@ public abstract class UsuarioEntity {
     @Column(name = "tipo_usuario", nullable = false, length = 15)
     private TipoUsuario tipoUsuario;
 
+    @Getter
     @Embedded
     private EnderecoEmbeddable endereco;
 
