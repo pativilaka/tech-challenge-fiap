@@ -1,11 +1,11 @@
 package br.com.fiap.techchallenge.application;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
-import br.com.fiap.techchallenge.application.dto.CriarUsuarioRequestApp;
-import br.com.fiap.techchallenge.application.dto.EnderecoApp;
-import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
-import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
-import br.com.fiap.techchallenge.application.service.CriarUsuarioService;
+import br.com.fiap.techchallenge.application.usuario.dto.CriarUsuarioRequestApp;
+import br.com.fiap.techchallenge.application.usuario.dto.EnderecoApp;
+import br.com.fiap.techchallenge.application.usuario.ports.out.IUsuarioRepository;
+import br.com.fiap.techchallenge.application.usuario.ports.presenters.IUsuarioPresenter;
+import br.com.fiap.techchallenge.application.usuario.service.CriarUsuarioService;
 import br.com.fiap.techchallenge.domain.comum.Endereco;
 import br.com.fiap.techchallenge.domain.usuario.TipoUsuario;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;

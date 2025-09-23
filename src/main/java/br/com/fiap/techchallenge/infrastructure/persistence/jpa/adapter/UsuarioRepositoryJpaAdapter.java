@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.infrastructure.persistence.jpa.adapter;
 
-import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
+import br.com.fiap.techchallenge.application.usuario.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;
 import br.com.fiap.techchallenge.infrastructure.persistence.jpa.mapper.UsuarioEntityMapper;
 import br.com.fiap.techchallenge.infrastructure.persistence.jpa.repository.UsuarioJpaRepository;

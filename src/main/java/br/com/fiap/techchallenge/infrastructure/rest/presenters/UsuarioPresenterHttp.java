@@ -1,8 +1,8 @@
 package br.com.fiap.techchallenge.infrastructure.rest.presenters;
 
-import br.com.fiap.techchallenge.application.dto.ListaUsuariosResponseApp;
-import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
-import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
+import br.com.fiap.techchallenge.application.usuario.dto.ListaUsuariosResponseApp;
+import br.com.fiap.techchallenge.application.usuario.dto.UsuarioResponseApp;
+import br.com.fiap.techchallenge.application.usuario.ports.presenters.IUsuarioPresenter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,10 @@
 package br.com.fiap.techchallenge.application.mappers;
 
-import br.com.fiap.techchallenge.application.dto.AtualizarUsuarioRequestApp;
-import br.com.fiap.techchallenge.application.dto.CriarUsuarioRequestApp;
-import br.com.fiap.techchallenge.application.dto.EnderecoApp;
-import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
+import br.com.fiap.techchallenge.application.usuario.dto.AtualizarUsuarioRequestApp;
+import br.com.fiap.techchallenge.application.usuario.dto.CriarUsuarioRequestApp;
+import br.com.fiap.techchallenge.application.usuario.dto.EnderecoApp;
+import br.com.fiap.techchallenge.application.usuario.dto.UsuarioResponseApp;
+import br.com.fiap.techchallenge.application.usuario.mappers.UsuarioMapper;
 import br.com.fiap.techchallenge.domain.comum.Endereco;
 import br.com.fiap.techchallenge.domain.usuario.*;
 import static org.junit.jupiter.api.Assertions.*;

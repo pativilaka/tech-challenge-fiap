@@ -1,8 +1,8 @@
 package br.com.fiap.techchallenge.application;
 
-import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
-import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
-import br.com.fiap.techchallenge.application.service.ListarUsuariosService;
+import br.com.fiap.techchallenge.application.usuario.ports.out.IUsuarioRepository;
+import br.com.fiap.techchallenge.application.usuario.ports.presenters.IUsuarioPresenter;
+import br.com.fiap.techchallenge.application.usuario.service.ListarUsuariosService;
 import br.com.fiap.techchallenge.domain.comum.Endereco;
 import br.com.fiap.techchallenge.domain.usuario.TipoUsuario;
 import br.com.fiap.techchallenge.domain.usuario.UsuarioFactoryBuilder;

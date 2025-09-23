@@ -1,10 +1,10 @@
 package br.com.fiap.techchallenge.infrastructure.rest.controllers;
 
-import br.com.fiap.techchallenge.application.dto.AtualizarUsuarioRequestApp;
-import br.com.fiap.techchallenge.application.dto.CriarUsuarioRequestApp;
-import br.com.fiap.techchallenge.application.dto.ListaUsuariosResponseApp;
-import br.com.fiap.techchallenge.application.dto.UsuarioResponseApp;
-import br.com.fiap.techchallenge.application.ports.in.*;
+import br.com.fiap.techchallenge.application.usuario.dto.AtualizarUsuarioRequestApp;
+import br.com.fiap.techchallenge.application.usuario.dto.CriarUsuarioRequestApp;
+import br.com.fiap.techchallenge.application.usuario.dto.ListaUsuariosResponseApp;
+import br.com.fiap.techchallenge.application.usuario.dto.UsuarioResponseApp;
+import br.com.fiap.techchallenge.application.usuario.ports.in.*;
 import br.com.fiap.techchallenge.infrastructure.rest.presenters.UsuarioPresenterHttp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
