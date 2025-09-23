@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.application.mappers;
 
+import br.com.fiap.techchallenge.application.usuario.mappers.EnderecoMapper;
 import br.com.fiap.techchallenge.domain.comum.Endereco;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;

@@ -2,9 +2,9 @@ package br.com.fiap.techchallenge.application;
 
 import br.com.fiap.techchallenge.application.comum.ApplicationException;
 import br.com.fiap.techchallenge.application.comum.NotFoundException;
-import br.com.fiap.techchallenge.application.ports.out.IUsuarioRepository;
-import br.com.fiap.techchallenge.application.ports.presenters.IUsuarioPresenter;
-import br.com.fiap.techchallenge.application.service.DeletarUsuarioService;
+import br.com.fiap.techchallenge.application.usuario.ports.out.IUsuarioRepository;
+import br.com.fiap.techchallenge.application.usuario.ports.presenters.IUsuarioPresenter;
+import br.com.fiap.techchallenge.application.usuario.service.DeletarUsuarioService;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

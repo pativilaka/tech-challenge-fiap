@@ -14,7 +14,7 @@ public class Consulta {
     private LocalDate fim;
     private StatusConsulta status;
 
-    public Consulta(Long id, Long medicoId, Long pacienteId, LocalDate inicio,
+    private Consulta(Long id, Long medicoId, Long pacienteId, LocalDate inicio,
                     LocalDate fim, StatusConsulta status) {
         this.id = id;
         this.medicoId = medicoId;
