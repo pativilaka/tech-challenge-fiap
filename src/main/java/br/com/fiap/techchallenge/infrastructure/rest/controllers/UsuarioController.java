@@ -6,10 +6,12 @@ import br.com.fiap.techchallenge.application.usuario.dto.ListaUsuariosResponseAp
 import br.com.fiap.techchallenge.application.usuario.dto.UsuarioResponseApp;
 import br.com.fiap.techchallenge.application.usuario.ports.in.*;
 import br.com.fiap.techchallenge.infrastructure.rest.presenters.UsuarioPresenterHttp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -20,17 +22,6 @@ public class UsuarioController {
     private final IListarUsuarios listarUsuarios;
     private final IDeletarUsuario deletarUsuario;
     private final UsuarioPresenterHttp presenterHttp;
-
-    public UsuarioController(ICriarUsuario criarUsuario, IAtualizarUsuario atualizarUsuario,
-                             IBuscarUsuarioPorId buscarUsuarioPorId, IListarUsuarios listarUsuarios,
-                             IDeletarUsuario deletarUsuario, UsuarioPresenterHttp presenterHttp) {
-        this.criarUsuario = criarUsuario;
-        this.atualizarUsuario = atualizarUsuario;
-        this.buscarUsuarioPorId = buscarUsuarioPorId;
-        this.listarUsuarios = listarUsuarios;
-        this.deletarUsuario = deletarUsuario;
-        this.presenterHttp = presenterHttp;
-    }
 
     @PostMapping
     public ResponseEntity<UsuarioResponseApp> criar(@RequestBody CriarUsuarioRequestApp request) {
