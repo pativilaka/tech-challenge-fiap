@@ -6,7 +6,7 @@ import br.com.fiap.techchallenge.infrastructure.persistence.jpa.entity.*;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class UsuarioEntityMapper {
+public class    UsuarioEntityMapper {
 
     public static UsuarioEntity toEntity(Usuario domain) {
         if (domain == null) return null;

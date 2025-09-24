@@ -19,7 +19,8 @@ public class BuscarConsultaPorIdUseCase implements IBuscarConsultaPorId {
     }
 
     @Override
-    public void executar(Long consultaId) {
+    public void execute(Long consultaId) {
+
         Consulta consulta = repository.findById(consultaId)
                 .orElseThrow(() -> new DomainException("Consulta não encontrada"));
 
