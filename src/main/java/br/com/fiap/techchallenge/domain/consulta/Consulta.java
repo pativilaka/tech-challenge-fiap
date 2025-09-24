@@ -45,6 +45,15 @@ public class Consulta {
         return new Consulta(id, medicoId, pacienteId, inicio, fim, StatusConsulta.AGENDADA);
     }
 
+    /**
+     * Fábrica de HIDRATAÇÃO (reconstrução a partir do persistido).
+     * Usa o status já salvo no banco, sem chamar iniciar()/concluir()/cancelar().
+     */
+    public static Consulta rebuild(Long id, Long medicoId, Long pacienteId, LocalDate inicio,
+                                   LocalDate fim, StatusConsulta status) {
+        return new Consulta(id, medicoId, pacienteId, inicio, fim, status);
+    }
+
     public void iniciar() {
         StatusConsultaValidation.validarTransicao(this.status, StatusConsulta.EM_ANDAMENTO);
         this.status = StatusConsulta.EM_ANDAMENTO;
