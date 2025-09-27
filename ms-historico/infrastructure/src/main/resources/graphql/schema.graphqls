@@ -1,0 +1,28 @@
+type Consulta {
+    id: ID!
+    dataHora: String!
+    paciente: Paciente!
+    medico: Medico!
+    status: String!
+}
+
+type Paciente {
+    id: ID!
+    nome: String!
+    email: String!
+}
+
+type Medico {
+    id: ID!
+    nome: String!
+    email: String!
+}
+
+input ConsultaInput {
+    pacienteId: ID!
+}
+
+
+type Query {
+    consultasPorUsuario: [Consulta!]!
+}

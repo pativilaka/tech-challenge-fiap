@@ -4,3 +4,7 @@ ms-historico/.vscode/**
 *.iws
 *.iml
 *.ipr
+target/**
+*.log
+mvnw
+mvnw.cmd
