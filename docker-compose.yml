@@ -1,5 +1,25 @@
 version: "3.9" # pode ser 3.0, mas 3.9 é o mais usado hoje
 services:
+  ms-consulta:
+    build:
+      context: ./ms-consulta
+      dockerfile: Dockerfile
+    container_name: ms_consulta
+    ports:
+      - "8082:8082"
+    depends_on:
+      db:
+        condition: service_healthy
+  ms-notificacao:
+    build:
+      context: ./ms-notificacao
+      dockerfile: Dockerfile
+    container_name: ms_notificacao
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
   ms-historico:
     build:
       context: ./ms-historico
@@ -46,18 +66,11 @@ services:
     ports:
       - "9092:9092" # acesso externo (host)
       - "29092:29092" # acesso interno (entre containers)
-    # healthcheck:
-    #   test:
-    #     [
-    #       "CMD",
-    #       "kafka-broker-api-versions",
-    #       "--bootstrap-server",
-    #       "localhost:29092",
-    #     ]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
-    #   start_period: 20s
+    healthcheck:
+      test: /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+      interval: 10s
+      timeout: 5s
+      retries: 3
     environment:
       # Identificação do broker
       KAFKA_NODE_ID: 1
