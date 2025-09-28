@@ -9,27 +9,19 @@ import static java.util.UUID.randomUUID;
 
 public class ConsultaID extends Identifier {
 
-    private final String value;
+    private final Integer value;
 
-    private ConsultaID(final String value){
+    private ConsultaID(final Integer value){
         Objects.nonNull(value);
         this.value = value;
     }
 
-    public static ConsultaID unique() {
-        return new ConsultaID(randomUUID().toString());
-    }
-
-    public static ConsultaID from(final String value) {
+    public static ConsultaID from(final Integer value) {
         return new ConsultaID(value);
     }
 
-    public static ConsultaID from(final UUID value) {
-        return new ConsultaID(value.toString());
-    }
-
     @Override
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 

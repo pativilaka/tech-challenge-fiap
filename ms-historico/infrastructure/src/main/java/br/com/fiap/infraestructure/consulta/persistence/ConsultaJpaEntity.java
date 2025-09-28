@@ -15,44 +15,52 @@ public class ConsultaJpaEntity {
     public ConsultaJpaEntity() {}
 
     private ConsultaJpaEntity(
-            final String id,
-            final String pacienteId,
-            final String medicoId,
-            final LocalDateTime dataHora,
+            final Integer id,
+            final Integer pacienteId,
+            final Integer medicoId,
+            final LocalDateTime dataInicio,
+            final LocalDateTime dataFim,
             final Status status
     ) {
         this.id = id;
         this.paciente = pacienteId;
         this.medico = medicoId;
-        this.dataHora = dataHora;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
         this.status = status;
     }
 
     @Id
-    private String id;
+    private Integer id;
 
     @Column(name = "paciente_id")
-    private String paciente;
+    private Integer paciente;
 
     @Column(name = "medico_id")
-    private String medico;
+    private Integer medico;
 
-    @Column(name = "data_hora")
-    private LocalDateTime dataHora;
+    @Column(name = "data_inicio")
+    private LocalDateTime dataInicio;
+
+    @Column(name = "data_fim")
+    private LocalDateTime dataFim;
+
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public static ConsultaJpaEntity from(final String id,
-                                         final String  pacienteId,
-                                         final String medicoId,
-                                         final LocalDateTime dataHora,
+    public static ConsultaJpaEntity from(final Integer id,
+                                         final Integer  pacienteId,
+                                         final Integer medicoId,
+                                         final LocalDateTime dataInicio,
+                                         final LocalDateTime dataFim,
                                          final Status status) {
         return new ConsultaJpaEntity(
                 id,
                 pacienteId,
                 medicoId,
-                dataHora,
+                dataInicio,
+                dataFim,
                 status
         );
     }
@@ -62,7 +70,7 @@ public class ConsultaJpaEntity {
                 ConsultaID.from(this.id),
                 UsuarioID.from(this.paciente),
                 UsuarioID.from(this.medico),
-                this.dataHora,
+                this.dataInicio,
                 this.status.name()
         );
     }

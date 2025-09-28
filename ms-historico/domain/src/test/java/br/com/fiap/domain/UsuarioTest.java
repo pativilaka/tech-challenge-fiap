@@ -6,6 +6,7 @@ import br.com.fiap.domain.medico.Medico;
 import br.com.fiap.domain.paciente.Paciente;
 import br.com.fiap.domain.usuario.CPF;
 import br.com.fiap.domain.usuario.UsuarioFactory;
+import br.com.fiap.domain.usuario.UsuarioID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,7 @@ public class UsuarioTest {
 
 
         final var actualUsuario = UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -58,6 +60,7 @@ public class UsuarioTest {
 
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -84,6 +87,7 @@ public class UsuarioTest {
 
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -109,6 +113,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -135,6 +140,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -161,6 +167,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -187,6 +194,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -212,6 +220,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -236,6 +245,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 null,
                 expectedCpf,
                 expectedDataNascimento,
@@ -261,6 +271,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -285,6 +296,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -310,6 +322,7 @@ public class UsuarioTest {
         final var expectedSenha = "";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -334,6 +347,7 @@ public class UsuarioTest {
         final var expectedTipoUsuario = "MEDICO";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -359,6 +373,7 @@ public class UsuarioTest {
         final var expectedSenha = "senha123";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -384,6 +399,7 @@ public class UsuarioTest {
         final var expectedTipoUsuario = "";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> UsuarioFactory.createUsuario(
+                123,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -401,6 +417,7 @@ public class UsuarioTest {
 
     @Test
     public void deveReceberParametroValidos_quandoCriarNovoUsuarioDoTipoEnfermeiro_entaoInstancieUmUsuario() {
+        final var expectedId = UsuarioID.from(123);
         final var expectedName = "Ana Maria";
         final var expectedCpf = new CPF("123.456.789-09");
         final var expectedDataNascimento = LocalDate.of(1985, 8, 15);
@@ -410,6 +427,7 @@ public class UsuarioTest {
         final var expectedCoren = "1234567890";
 
         final var actualUsuario = Enfermeiro.newPaciente(
+                expectedId,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -431,6 +449,7 @@ public class UsuarioTest {
 
     @Test
     public void deveReceberParametroValidos_quandoCriarNovoUsuarioDoTipoPaciente_entaoInstancieUmUsuario() {
+        final var expectedId = UsuarioID.from(123);
         final var expectedName = "Ana Maria";
         final var expectedCpf = new CPF("123.456.789-09");
         final var expectedDataNascimento = LocalDate.of(1985, 8, 15);
@@ -440,6 +459,7 @@ public class UsuarioTest {
         final var expectedConvenioMedico = "Bradesco saúde";
 
         final var actualPaciente = Paciente.newPaciente(
+                expectedId,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,
@@ -461,6 +481,7 @@ public class UsuarioTest {
 
     @Test
     public void deveReceberParametrosValidos_quandoCriarNovoUsuarioDoTipoMedico_entaoInstancieUmUsuario() {
+        final var expectedId = UsuarioID.from(123);
         final var expectedName = "João Silva";
         final var expectedCpf = new CPF("77149552013");
         final var expectedDataNascimento = LocalDate.of(1990, 5, 20);
@@ -471,6 +492,7 @@ public class UsuarioTest {
         final var expectedEspecialidade = "Cardiologista";
 
         final var actualUsuario = Medico.newMedico(
+                expectedId,
                 expectedName,
                 expectedCpf,
                 expectedDataNascimento,

@@ -1,13 +1,9 @@
 package br.com.fiap.infraestructure.consulta.model;
 
-
-import br.com.fiap.domain.consulta.Consulta;
-import br.com.fiap.domain.usuario.Usuario;
-
 import java.time.LocalDateTime;
 
 public record ConsultaResponse(
-        String id,
+        Integer id,
         LocalDateTime dataHora,
         UsuarioResponse paciente,
         UsuarioResponse medico,
@@ -16,7 +12,7 @@ public record ConsultaResponse(
 
 
     public record UsuarioResponse(
-            String id,
+            Integer id,
             String nome,
             String email
     ) {

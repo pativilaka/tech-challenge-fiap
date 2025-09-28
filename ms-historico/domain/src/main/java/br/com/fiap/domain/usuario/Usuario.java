@@ -41,6 +41,7 @@ public class Usuario extends AggregateRoot<UsuarioID> implements Cloneable {
     }
 
     protected static Usuario newUsuario(
+            final UsuarioID id,
             final String nome,
             final CPF cpf,
             final LocalDate dataNascimento,
@@ -48,7 +49,6 @@ public class Usuario extends AggregateRoot<UsuarioID> implements Cloneable {
             final String senha,
             final String tipoUsuario
     ) {
-        final var id = UsuarioID.unique();
         return new Usuario(
                 id,
                 nome,

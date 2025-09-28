@@ -27,7 +27,7 @@ public class GetConsultaByUsuarioIDUseCaseTest {
     @Test
     public void givenAValidId_whenCallGetConsulta_shouldReturnConsulta() {
         // given
-        final var expectedUsuarioId = "usuario-123";
+        final var expectedUsuarioId = 123;
 
         Mockito.when(consultaGateway.findAllByUsuarioId(expectedUsuarioId))
                 .thenReturn(Mockito.anyList());

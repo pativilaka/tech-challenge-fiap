@@ -9,27 +9,19 @@ import static java.util.UUID.randomUUID;
 
 public class UsuarioID extends Identifier {
 
-    private final String value;
+    private final Integer value;
 
-    private UsuarioID(final String value){
-        Objects.nonNull(value);
+    private UsuarioID(final Integer value) {
+        Objects.requireNonNull(value);
         this.value = value;
     }
 
-    public static UsuarioID unique() {
-        return new UsuarioID(randomUUID().toString());
-    }
-
-    public static UsuarioID from(final String value) {
+    public static UsuarioID from(final Integer value) {
         return new UsuarioID(value);
     }
 
-    public static UsuarioID from(final UUID value) {
-        return new UsuarioID(value.toString());
-    }
-
     @Override
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 
@@ -45,4 +37,10 @@ public class UsuarioID extends Identifier {
     public int hashCode() {
         return Objects.hash(getValue());
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }
+

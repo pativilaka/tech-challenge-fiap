@@ -19,7 +19,7 @@ public class ConsultaPostgresGateway implements ConsultaGateway {
     }
 
     @Override
-    public List<Consulta> findAllByUsuarioId(String usuarioID) {
+    public List<Consulta> findAllByUsuarioId(Integer usuarioID) {
         return consultaRepository.findAllByUsuarioId(usuarioID)
                 .stream().map(ConsultaJpaEntity::toAggregate).collect(Collectors.toList());
     }

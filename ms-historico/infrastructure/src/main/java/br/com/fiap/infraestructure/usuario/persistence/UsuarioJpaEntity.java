@@ -13,7 +13,7 @@ public class UsuarioJpaEntity {
     public UsuarioJpaEntity() {}
 
     private UsuarioJpaEntity(
-            final String id,
+            final Integer id,
             final String nome,
             final String cpf,
             final LocalDate dataNascimento,
@@ -55,7 +55,7 @@ public class UsuarioJpaEntity {
     }
 
     @Id
-    private String id;
+    private Integer id;
 
     @Column(name = "nome", nullable = false)
     private String nome;
@@ -75,11 +75,11 @@ public class UsuarioJpaEntity {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -15,7 +15,7 @@ public class DefaultGetConsultaByUsuarioIdUseCase extends GetConsultaByUsuarioId
     }
 
     @Override
-    public List<ListConsultaOutput> execute(String usuarioId) {
+    public List<ListConsultaOutput> execute(Integer usuarioId) {
         return this.consultaGateway.findAllByUsuarioId(usuarioId)
                 .stream().map(ListConsultaOutput::from).collect(Collectors.toList());
     }

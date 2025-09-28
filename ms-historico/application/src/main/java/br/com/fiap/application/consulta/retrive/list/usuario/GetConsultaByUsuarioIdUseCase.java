@@ -4,5 +4,5 @@ import br.com.fiap.application.UseCase;
 
 import java.util.List;
 
-public abstract class GetConsultaByUsuarioIdUseCase extends UseCase<String, List<ListConsultaOutput>> {
+public abstract class GetConsultaByUsuarioIdUseCase extends UseCase<Integer, List<ListConsultaOutput>> {
 }

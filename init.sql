@@ -22,7 +22,7 @@ CREATE TABLE medico
     crm VARCHAR(20) NOT NULL UNIQUE,
     especialidade VARCHAR(100) NOT NULL,
     CONSTRAINT fk_medico_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-)
+);
 
 CREATE TABLE paciente
 (
@@ -53,10 +53,10 @@ CREATE TABLE consultas
 INSERT INTO usuarios
     (id, nome, cpf, data_de_nascimento, email, senha, tipo_usuario, telefone)
 VALUES
-    (1, 'Dr. João Silva', '12345678901', '1980-05-15', 'joao@email.com', '$2a$12$MRPaPizvzQSC4qJJIK3N3uXnigIPMfYNVkDjPHUecG52cN9aL8v/q', 'MEDICO', '11 98765-4321'),
-    (2, 'Maria Oliveira', '10987654321', '1990-08-22', 'maria@email.com', '$2a$12$8.Nrp.ByAEikJrHpZJcJEuWYzIwaepLBnTAzlqvlibADq/EdskFQu', 'PACIENTE', '11 98765-4321'),
-    (3, 'Enf. Carlos Souza', '11223344556', '1985-03-10', 'carlos@email.com', '$2a$12$.9cnS93Vj7p3qPow5nUuPO9AwUDL3TLqZq2Ky6kzH0lnHl4A1KOIK', 'ENFERMEIRO', '11 98765-4321'),
-    (4, 'Ana Pereira', '22334455667', '1992-11-30', 'ana@email.com', '$2a$12$TMzPcKQDAVOtDAHuYG4cJuRevS1anNd4pz7SMuVi4/Nx/W9DURaiu', 'PACIENTE', '11 98765-4321');
+    (1, 'Dr. João Silva', '03005175057', '1980-05-15', 'joao@email.com', '$2a$12$MRPaPizvzQSC4qJJIK3N3uXnigIPMfYNVkDjPHUecG52cN9aL8v/q', 'MEDICO', '11 98765-4321'),
+    (2, 'Maria Oliveira', '51547389001', '1990-08-22', 'maria@email.com', '$2a$12$8.Nrp.ByAEikJrHpZJcJEuWYzIwaepLBnTAzlqvlibADq/EdskFQu', 'PACIENTE', '11 98765-4321'),
+    (3, 'Enf. Carlos Souza', '89524329085', '1985-03-10', 'carlos@email.com', '$2a$12$.9cnS93Vj7p3qPow5nUuPO9AwUDL3TLqZq2Ky6kzH0lnHl4A1KOIK', 'ENFERMEIRO', '11 98765-4321'),
+    (4, 'Ana Pereira', '29913698090', '1992-11-30', 'ana@email.com', '$2a$12$TMzPcKQDAVOtDAHuYG4cJuRevS1anNd4pz7SMuVi4/Nx/W9DURaiu', 'PACIENTE', '11 98765-4321');
 
 INSERT INTO medico
     (usuario_id, crm, especialidade)
@@ -77,6 +77,11 @@ INSERT INTO paciente
     (usuario_id, plano_saude)
 VALUES
     (4, 'Amil');
+
+insert into consultas
+    (id, paciente_id, medico_id, data_inicio, data_fim, status)
+values
+    (1, 2, 1, '2025-11-20 00:00:00', '2025-11-20 01:00:00', 'AGENDADA');
 
 
 

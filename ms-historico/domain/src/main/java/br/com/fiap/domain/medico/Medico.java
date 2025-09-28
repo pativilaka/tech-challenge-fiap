@@ -26,13 +26,14 @@ public class Medico extends Usuario {
     }
 
     public static Medico newMedico(
+            final UsuarioID id,
             final String nome,
-            final CPF cpf,final LocalDate dataNascimento,
+            final CPF cpf,
+            final LocalDate dataNascimento,
             final String email,
             final String senha,
             final String crm,
             final String especialidade) {
-        final var id = UsuarioID.unique();
         return new Medico(id, nome, cpf, dataNascimento, email, senha, crm, especialidade);
     }
 
