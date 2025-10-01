@@ -21,13 +21,13 @@ public class Enfermeiro extends Usuario {
         this.coren = coren;
     }
 
-    public static Enfermeiro newPaciente(final String nome,
+    public static Enfermeiro newPaciente(final UsuarioID id,
+                                        final String nome,
                                          final CPF cpf,
                                          final LocalDate dataNascimento,
                                          final String email,
                                          final String senha,
                                          final String coren) {
-        final var id = UsuarioID.unique();
         return new Enfermeiro(id, nome, cpf, dataNascimento, email, senha, coren);
     }
 

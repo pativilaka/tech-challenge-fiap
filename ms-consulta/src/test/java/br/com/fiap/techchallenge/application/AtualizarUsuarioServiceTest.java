@@ -58,7 +58,7 @@ public class AtualizarUsuarioServiceTest {
         );
 
 
-        service.execute(req);
+        service.execute(5L, req);
 
         verify(repository).findById(5L);
         verify(repository).update(argThat(u ->
@@ -78,7 +78,7 @@ public class AtualizarUsuarioServiceTest {
     void deveLancarNotFoundQuandoNaoExiste() {
         when(repository.findById(99L)).thenReturn(Optional.empty());
         var req = new AtualizarUsuarioRequestApp(99L, null,null,null,null,null,null,null,null,null, null, null, null,null);
-        assertThrows(NotFoundException.class, () -> service.execute(req));
+        assertThrows(NotFoundException.class, () -> service.execute(99L, req));
         verify(repository).findById(99L);
         verifyNoMoreInteractions(repository);
         verifyNoInteractions(presenter);
@@ -86,7 +86,7 @@ public class AtualizarUsuarioServiceTest {
 
     @Test
     void deveLancarApplicationExceptionQuandoRequestNulo() {
-        assertThrows(ApplicationException.class, () -> service.execute(null));
+        assertThrows(ApplicationException.class, () -> service.execute(null, null));
         verifyNoInteractions(repository, presenter);
     }
 }

@@ -4,7 +4,7 @@ package br.com.fiap.infraestructure.consulta.persistence;
 public enum Status {
     AGENDADA,
     CANCELADA,
-    REMARCADA,
+    ANDAMENTO,
     CONCLUIDA;
 
     public static Status from(String value) {

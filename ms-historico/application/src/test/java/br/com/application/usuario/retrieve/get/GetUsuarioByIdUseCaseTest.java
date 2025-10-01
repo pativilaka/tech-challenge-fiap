@@ -39,6 +39,7 @@ public class GetUsuarioByIdUseCaseTest {
     @Test
     public void givenAValidId_whenCallGetUsuario_shouldReturnUsuario() {
         // given
+        final var expectedId = UsuarioID.from(123);
         final var expectedNome = "João Silva";
         final var expectedCpf = new CPF("77149552013");
         final var expectedDataNascimento = LocalDate.of(1990, 1, 1);
@@ -48,6 +49,7 @@ public class GetUsuarioByIdUseCaseTest {
         final var expectedConvenioMedico = "SUS123456";
 
         final var anUsuario = Paciente.newPaciente(
+                expectedId,
                 expectedNome,
                 expectedCpf,
                 expectedDataNascimento,
@@ -55,8 +57,6 @@ public class GetUsuarioByIdUseCaseTest {
                 expectedSenha,
                 expectedConvenioMedico
         );
-
-        final var expectedId = anUsuario.getId();
 
         when(usuarioGateway.findById(expectedId))
                 .thenReturn(Optional.of(anUsuario));
@@ -74,7 +74,7 @@ public class GetUsuarioByIdUseCaseTest {
 
     @Test
     public void givenAValidId_whenGatewayThrowsError_shouldBeReturnException() {
-        final var expectedId = UsuarioID.from("123");
+        final var expectedId = UsuarioID.from(123);
         final var expectedMensagem = "Usuario não encontrado com o ID: 123";
 
 
@@ -93,7 +93,7 @@ public class GetUsuarioByIdUseCaseTest {
 
     @Test
     public void givenAnInvalidId_whenCallGetUsuario_shouldReturnNotFound() {
-        final var expectedId = UsuarioID.from("123");
+        final var expectedId = UsuarioID.from(123);
         final var expectedMensagem = "Gateway error";
         when(usuarioGateway.findById(eq(expectedId)))
                 .thenThrow(new IllegalStateException(expectedMensagem));

@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface ConsultaGateway {
 
-    List<Consulta> findAllByUsuarioId(String pacienteId);
+    List<Consulta> findAllByUsuarioId(Integer pacienteId);
 
 }

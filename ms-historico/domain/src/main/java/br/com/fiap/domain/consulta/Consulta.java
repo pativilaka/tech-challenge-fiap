@@ -33,13 +33,13 @@ public class Consulta extends AggregateRoot<ConsultaID> implements Cloneable {
         selfValidate();
     }
 
-    public static Consulta newConsulta(final UsuarioID medicoId,
+    public static Consulta newConsulta(final ConsultaID consultaID,
+                                final UsuarioID medicoId,
                                 final UsuarioID pacienteId,
                                 final LocalDateTime dataHoraConsulta,
                                 final String status) {
-        final var id = ConsultaID.unique();
         return new Consulta(
-                id,
+                consultaID,
                 medicoId,
                 pacienteId,
                 dataHoraConsulta,

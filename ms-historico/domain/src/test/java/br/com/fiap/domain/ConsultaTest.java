@@ -1,6 +1,7 @@
 package br.com.fiap.domain;
 
 import br.com.fiap.domain.consulta.Consulta;
+import br.com.fiap.domain.consulta.ConsultaID;
 import br.com.fiap.domain.exceptions.DomainException;
 import br.com.fiap.domain.usuario.UsuarioID;
 import org.junit.jupiter.api.Assertions;
@@ -12,12 +13,13 @@ public class ConsultaTest {
 
     @Test
     public void deveReceberParametroValido_quandoCriarNovaConsulta_entaoRetorneUmaInstancia() {
-        final var pacienteId = UsuarioID.from("123");
-        final var medicoId = UsuarioID.from("123");
+        final var expectedId = ConsultaID.from(123);
+        final var pacienteId = UsuarioID.from(123);
+        final var medicoId = UsuarioID.from(123);
         final var dataHora = LocalDateTime.now().plusDays(1);
         final var status = "AGENDADA";
 
-        final Consulta consulta = Consulta.newConsulta(pacienteId, medicoId, dataHora, status);
+        final Consulta consulta = Consulta.newConsulta(expectedId, pacienteId, medicoId, dataHora, status);
 
         Assertions.assertNotNull(consulta);
         Assertions.assertEquals(pacienteId, consulta.getPacienteId());
@@ -28,13 +30,14 @@ public class ConsultaTest {
 
     @Test
     public void deveReceberStatusInvalido_quandoCriarConsulta_entaoRetorneUmaInstancia() {
-        final var pacienteId = UsuarioID.from("123");
-        final var medicoId = UsuarioID.from("123");
+        final var expectedId = ConsultaID.from(123);
+        final var pacienteId = UsuarioID.from(123);
+        final var medicoId = UsuarioID.from(123);
         final var dataHora = LocalDateTime.now().minusDays(1);
         final var status = "ERRADA";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> {
-            Consulta.newConsulta(pacienteId, medicoId, dataHora, status);
+            Consulta.newConsulta(expectedId, pacienteId, medicoId, dataHora, status);
         });
 
         Assertions.assertEquals("Falha ao criar objeto usuário", actualException.getMessage());
@@ -45,13 +48,13 @@ public class ConsultaTest {
 
     @Test
     public void deveReceberMedicoIdNulo_quandoCriarConsulta_entaoRetorneUmaInstancia() {
-        final var pacienteId = UsuarioID.from("123");
-        final UsuarioID medicoId = null;
+        final var expectedId = ConsultaID.from(123);
+        final var pacienteId = UsuarioID.from(123);
         final var dataHora = LocalDateTime.now().minusDays(1);
         final var status = "AGENDADA";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> {
-            Consulta.newConsulta(medicoId, pacienteId, dataHora, status);
+            Consulta.newConsulta(expectedId, null, pacienteId, dataHora, status);
         });
 
         Assertions.assertEquals("Falha ao criar objeto usuário", actualException.getMessage());
@@ -62,13 +65,14 @@ public class ConsultaTest {
 
     @Test
     public void deveReceberStatusNulo_quandoCriarConsulta_entaoRetorneUmaInstancia() {
-        final var pacienteId = UsuarioID.from("123");
-        final var medicoId = UsuarioID.from("123");
+        final var expectedId = ConsultaID.from(123);
+        final var pacienteId = UsuarioID.from(123);
+        final var medicoId = UsuarioID.from(123);
         final var dataHora = LocalDateTime.now().plusDays(1);
         final String status = null;
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> {
-            Consulta.newConsulta(medicoId, pacienteId, dataHora, status);
+            Consulta.newConsulta(expectedId, medicoId, pacienteId, dataHora, status);
         });
 
         Assertions.assertEquals("Falha ao criar objeto usuário", actualException.getMessage());
@@ -80,13 +84,14 @@ public class ConsultaTest {
 
     @Test
     public void deveReceberStatusVazio_quandoCriarConsulta_entaoRetorneUmaInstancia() {
-        final var pacienteId = UsuarioID.from("123");
-        final var medicoId = UsuarioID.from("123");
+        final var expectedId = ConsultaID.from(123);
+        final var pacienteId = UsuarioID.from(123);
+        final var medicoId = UsuarioID.from(123);
         final var dataHora = LocalDateTime.now().minusDays(1);
         final var status = "";
 
         final var actualException = Assertions.assertThrows(DomainException.class, () -> {
-            Consulta.newConsulta(medicoId, pacienteId, dataHora, status);
+            Consulta.newConsulta(expectedId, medicoId, pacienteId, dataHora, status);
         });
 
         Assertions.assertEquals("Falha ao criar objeto usuário", actualException.getMessage());

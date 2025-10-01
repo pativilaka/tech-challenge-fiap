@@ -1,5 +1,36 @@
 version: "3.9" # pode ser 3.0, mas 3.9 é o mais usado hoje
 services:
+  ms-consulta:
+    build:
+      context: ./ms-consulta
+      dockerfile: Dockerfile
+    container_name: ms_consulta
+    ports:
+      - "8082:8082"
+    depends_on:
+      db:
+        condition: service_healthy
+  ms-notificacao:
+    build:
+      context: ./ms-notificacao
+      dockerfile: Dockerfile
+    container_name: ms_notificacao
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+  ms-historico:
+    build:
+      context: ./ms-historico
+      dockerfile: Dockerfile
+    container_name: ms_historico
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
   db:
     image: postgres:16
     container_name: postgres_db
@@ -9,7 +40,14 @@ services:
       POSTGRES_DB: mydb
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "mydb", "-U", "user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data
   email:
     image: mailhog/mailhog
@@ -28,6 +66,11 @@ services:
     ports:
       - "9092:9092" # acesso externo (host)
       - "29092:29092" # acesso interno (entre containers)
+    healthcheck:
+      test: /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+      interval: 10s
+      timeout: 5s
+      retries: 3
     environment:
       # Identificação do broker
       KAFKA_NODE_ID: 1

@@ -15,8 +15,7 @@ public class Paciente extends Usuario {
         this.convenioMedico = convenioMedico;
     }
 
-    public static Paciente newPaciente(String nome, CPF cpf, LocalDate dataNascimento, String email, String senha, String convenioMedico) {
-        final var id = UsuarioID.unique();
+    public static Paciente newPaciente(UsuarioID id, String nome, CPF cpf, LocalDate dataNascimento, String email, String senha, String convenioMedico) {
         return new Paciente(id, nome, cpf, dataNascimento, email, senha, convenioMedico);
     }
 

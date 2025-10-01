@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ConsultaRepository extends JpaRepository<ConsultaJpaEntity, String > {
+public interface ConsultaRepository extends JpaRepository<ConsultaJpaEntity, Integer > {
 
     @Query("SELECT c FROM ConsultaJpaEntity c WHERE c.paciente = :usuarioId OR c.medico = :usuarioId")
-    List<ConsultaJpaEntity> findAllByUsuarioId(@Param("usuarioId") String usuarioId);
+    List<ConsultaJpaEntity> findAllByUsuarioId(@Param("usuarioId") Integer usuarioId);
 
 
 }

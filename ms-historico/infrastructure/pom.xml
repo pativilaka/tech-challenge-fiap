@@ -8,8 +8,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.fullcycle.admin.catalogo.infrastructure</groupId>
-    <artifactId>application</artifactId>
+    <groupId>com.br.fiap.infrastructure</groupId>
+    <artifactId>infrastructure</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 

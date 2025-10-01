@@ -16,7 +16,7 @@ public class DefaultGetUsuarioByIdUseCase extends GetUsuarioByIdUseCase {
     }
 
     @Override
-    public UsuarioOutput execute(String anIn) {
+    public UsuarioOutput execute(Integer anIn) {
         final var usuarioId = UsuarioID.from(anIn);
         final var usuario = this.usuarioGateway.findById(usuarioId)
                 .orElseThrow(notFound(usuarioId));

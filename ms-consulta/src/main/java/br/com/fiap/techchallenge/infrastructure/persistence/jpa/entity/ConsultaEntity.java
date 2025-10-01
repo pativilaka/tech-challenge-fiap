@@ -18,7 +18,7 @@ public class ConsultaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "consulta_id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -31,10 +31,10 @@ public class ConsultaEntity {
             foreignKey = @ForeignKey(name = "fk_consulta_paciente"))
     private UsuarioEntity paciente;
 
-    @Column(name = "inicio", nullable = false)
+    @Column(name = "data_inicio", nullable = false)
     private LocalDate inicio;
 
-    @Column(name = "fim", nullable = false)
+    @Column(name = "data_fim", nullable = false)
     private LocalDate fim;
 
     @Enumerated(EnumType.STRING)
