@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.infrastructure.config;
 
 import br.com.fiap.techchallenge.application.consulta.ports.in.*;
+import br.com.fiap.techchallenge.application.consulta.ports.out.IConsultaProducer;
 import br.com.fiap.techchallenge.application.consulta.ports.out.IConsultaRepository;
 import br.com.fiap.techchallenge.application.consulta.ports.out.IUsuarioLeituraRepository;
 import br.com.fiap.techchallenge.application.consulta.ports.presenters.IConsultaPresenter;
@@ -63,8 +64,9 @@ public class BeanConfig {
 
     @Bean
     public ICancelarConsulta cancelarConsulta(IConsultaRepository consultaRepo,
-                                              IConsultaPresenter presenter) {
-        return new  CancelarConsultaUseCase(consultaRepo, presenter);
+                                              IConsultaPresenter presenter,
+                                              IConsultaProducer producer) {
+        return new  CancelarConsultaUseCase(consultaRepo, presenter, producer);
     }
 
     @Bean

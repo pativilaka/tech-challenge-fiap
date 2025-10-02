@@ -9,33 +9,37 @@ CREATE TABLE usuarios
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(15),
     tipo_usuario VARCHAR(20) NOT NULL,
-    endereco JSONB,
-    -- JSONB no Postgres
-    -- Enum no Java, mas no Postgres será String
+    logradouro VARCHAR(150),
+    numero VARCHAR(10),
+    bairro VARCHAR(100),
+    cidade VARCHAR(100),
+    uf CHAR(2),
+    cep VARCHAR(10),
+    complemento VARCHAR(255),
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE medico
+CREATE TABLE medicos
 (
-    usuario_id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY,
     crm VARCHAR(20) NOT NULL UNIQUE,
     especialidade VARCHAR(100) NOT NULL,
-    CONSTRAINT fk_medico_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    CONSTRAINT fk_medico_usuario FOREIGN KEY (id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE paciente
+CREATE TABLE pacientes
 (
-    usuario_id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY,
     plano_saude VARCHAR(100),
-    CONSTRAINT fk_paciente_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    CONSTRAINT fk_paciente_usuario FOREIGN KEY (id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE enfermeiro
+CREATE TABLE enfermeiros
 (
-    usuario_id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY,
     coren VARCHAR(20) NOT NULL UNIQUE,
-    CONSTRAINT fk_enfermeiro_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    CONSTRAINT fk_enfermeiro_usuario FOREIGN KEY (id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE consultas
@@ -58,23 +62,23 @@ VALUES
     (3, 'Enf. Carlos Souza', '89524329085', '1985-03-10', 'carlos@email.com', '$2a$12$.9cnS93Vj7p3qPow5nUuPO9AwUDL3TLqZq2Ky6kzH0lnHl4A1KOIK', 'ENFERMEIRO', '11 98765-4321'),
     (4, 'Ana Pereira', '29913698090', '1992-11-30', 'ana@email.com', '$2a$12$TMzPcKQDAVOtDAHuYG4cJuRevS1anNd4pz7SMuVi4/Nx/W9DURaiu', 'PACIENTE', '11 98765-4321');
 
-INSERT INTO medico
-    (usuario_id, crm, especialidade)
+INSERT INTO medicos
+    (id, crm, especialidade)
 VALUES
     (1, 'CRM123456', 'Cardiologia');
 
-INSERT INTO paciente
-    (usuario_id, plano_saude)
+INSERT INTO pacientes
+    (id, plano_saude)
 VALUES
     (2, 'Unimed');
 
-INSERT INTO enfermeiro
-    (usuario_id, coren)
+INSERT INTO enfermeiros
+    (id, coren)
 VALUES
     (3, 'COREN654321');
 
-INSERT INTO paciente
-    (usuario_id, plano_saude)
+INSERT INTO pacientes
+    (id, plano_saude)
 VALUES
     (4, 'Amil');
 

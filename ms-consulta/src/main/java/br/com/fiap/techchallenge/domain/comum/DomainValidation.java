@@ -29,7 +29,7 @@ public final class DomainValidation {
     }
 
     public static void cpf(String valor, String campo) {
-        if (valor == null || !valor.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")) {
+        if (valor == null || !valor.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$|^\\d{11}$")) {
             throw new DomainException("Campo '" + campo + "' não é um CPF válido.");
         }
     }
