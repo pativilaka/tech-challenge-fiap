@@ -1,5 +1,15 @@
 version: "3.9" # pode ser 3.0, mas 3.9 é o mais usado hoje
 services:
+  ms-autenticacao:
+    build:
+      context: ./ms-autenticacao
+      dockerfile: Dockerfile
+    container_name: ms-autenticacao
+    ports:
+      - "8083:8083"
+    depends_on:
+      db:
+        condition: service_healthy
   ms-consulta:
     build:
       context: ./ms-consulta
