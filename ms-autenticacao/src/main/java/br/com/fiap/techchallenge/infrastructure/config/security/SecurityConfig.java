@@ -82,6 +82,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/autenticacao/login",
+                                "/autenticacao/resgatar/usuario",
                                 "/h2-console/**",
                                 "/error"
                         ).permitAll()

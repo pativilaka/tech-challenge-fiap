@@ -1,5 +1,6 @@
 package br.com.fiap.infraestructure.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
@@ -26,17 +28,18 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableMethodSecurity()
 public class SecurityConfig {
 
-    private static final String SECRET = "suaChaveSuperSecretaDeNoMinimo32Caracteres";
-
-
+    @Value("${url.authentication}")
+    private String url;
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, OpaqueTokenIntrospector introspector) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated()
                 ).httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth -> oauth
+                        .opaqueToken(opaque -> opaque.introspector(introspector))
+                );;
 
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
@@ -44,10 +47,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder() {
-        byte[] secretBytes = SECRET.getBytes();
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretBytes, "AES");
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec).build();
+    OpaqueTokenIntrospector opaqueTokenIntrospector() {
+        // URL do endpoint do MS Auth que valida o token
+        return new CustomAuthMsIntrospector(url);
     }
 
     @Bean

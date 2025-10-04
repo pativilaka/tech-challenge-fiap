@@ -5,6 +5,7 @@ import br.com.fiap.techchallenge.application.usuario.ports.in.IAutenticarUsuario
 import br.com.fiap.techchallenge.application.usuario.dto.LoginRequestApp;
 import br.com.fiap.techchallenge.application.usuario.ports.presenters.IAutenticacaoPresenter;
 import br.com.fiap.techchallenge.domain.usuario.UserDetailsImpl;
+import br.com.fiap.techchallenge.infrastructure.config.security.JWTUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -24,17 +25,14 @@ public class AutenticarUsuarioService implements IAutenticarUsuario {
 
     private final IAutenticacaoPresenter presenter;
     private final AuthenticationManager authenticationManager;
-
-    @Value("${app.jwtSecret}")
-    public String jwtSecret;
-
-    @Value("${app.jwtExpirationMs}")
-    public int jwtExpirationMs;
+    private final JWTUtils jwtUtils;
 
     public AutenticarUsuarioService(IAutenticacaoPresenter presenter,
-                                    AuthenticationManager authenticationManager) {
+                                    AuthenticationManager authenticationManager,
+                                    JWTUtils jwtUtils) {
         this.presenter = presenter;
         this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -45,7 +43,7 @@ public class AutenticarUsuarioService implements IAutenticarUsuario {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        final String jwt = this.generateJwtToken(authentication);
+        final String jwt = jwtUtils.generateJwtToken(authentication);
 
         final UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -58,17 +56,5 @@ public class AutenticarUsuarioService implements IAutenticarUsuario {
 
     }
 
-    public String generateJwtToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
-        byte[] keyBytes = Base64.getDecoder().decode(jwtSecret);
-        Key key = Keys.hmacShaKeyFor(keyBytes);
-
-        return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
-    }
 }

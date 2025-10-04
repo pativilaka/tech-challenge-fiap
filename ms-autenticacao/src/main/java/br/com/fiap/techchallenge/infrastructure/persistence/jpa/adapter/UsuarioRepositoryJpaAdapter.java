@@ -22,4 +22,9 @@ public class UsuarioRepositoryJpaAdapter implements IUsuarioRepository {
         return jpa.findByEmail(email).map(UsuarioEntityMapper::toDomain);
     }
 
+    @Override
+    public Optional<Usuario> findById(Long id) {
+        return jpa.findById(id).map(UsuarioEntityMapper::toDomain);
+    }
+
 }

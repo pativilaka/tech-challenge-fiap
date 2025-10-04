@@ -24,6 +24,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private final BuscarUsuarioService buscarUsuarioService;
 
+    private final JWTUtils jwtUtils;
+
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
@@ -33,8 +35,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && buscarUsuarioService.validateJwtToken(jwt)) {
-                String email = buscarUsuarioService.getEmailFromJwtToken(jwt);
+            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+                String email = jwtUtils.getIdFromJwtToken(jwt);
                 UserDetails userDetails = buscarUsuarioService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken authentication =

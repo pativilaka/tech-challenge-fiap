@@ -7,6 +7,7 @@ import br.com.fiap.techchallenge.application.usuario.ports.in.*;
 import br.com.fiap.techchallenge.infrastructure.rest.presenters.AutenticacaoPresenterHttp;
 import br.com.fiap.techchallenge.infrastructure.rest.presenters.UsuarioPresenterHttp;
 import jakarta.security.auth.message.AuthException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class AutenticacaoController {
     private final UsuarioPresenterHttp usuarioPresenterHttp;
 
     @GetMapping("/resgatar/usuario")
-    public ResponseEntity<UsuarioResponseApp> execute(@RequestHeader String token) throws AuthException {
+    public ResponseEntity<UsuarioResponseApp> execute(HttpServletRequest request) throws AuthException {
+        String token = request.getHeader("Authorization").substring(7);
         buscarUsuario.execute(token);
         return ResponseEntity.status(HttpStatus.OK).body(usuarioPresenterHttp.get());
     }
