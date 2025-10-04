@@ -4,12 +4,14 @@ import br.com.fiap.techchallenge.application.usuario.mappers.UsuarioMapper;
 import br.com.fiap.techchallenge.application.usuario.ports.in.IBuscarUsuario;
 import br.com.fiap.techchallenge.application.usuario.ports.out.IUsuarioRepository;
 import br.com.fiap.techchallenge.application.usuario.ports.presenters.IBuscarUsuarioPresenter;
+import br.com.fiap.techchallenge.domain.usuario.UserDetailsImpl;
 import br.com.fiap.techchallenge.domain.usuario.Usuario;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.security.auth.message.AuthException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +37,14 @@ public class BuscarUsuarioService implements IBuscarUsuario {
     @Override
     public void execute(String token) throws AuthException {
         if (token != null && this.validateJwtToken(token)) {
-            String username = this.getUserNameFromJwtToken(token);
-            getUsuarioLogadoByEmail(username);
+            String username = this.getEmailFromJwtToken(token);
+            presenter.present(UsuarioMapper.toApp(getUsuarioLogadoByEmail(username)));
             return;
         }
         throw new AuthException("Nenhum usuário logado encontrado.");
     }
 
-    public String getUserNameFromJwtToken(String token) {
+    public String getEmailFromJwtToken(String token) {
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
 
         Claims claims = Jwts.parser()
@@ -70,10 +72,14 @@ public class BuscarUsuarioService implements IBuscarUsuario {
         }
     }
 
-    private void getUsuarioLogadoByEmail(String email) {
-        final Usuario usuarioEntidade = repository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(email));
+    public Usuario getUsuarioLogadoByEmail(String email) {
 
-        presenter.present(UsuarioMapper.toApp(usuarioEntidade));
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return UserDetailsImpl.build(getUsuarioLogadoByEmail(email));
     }
 }

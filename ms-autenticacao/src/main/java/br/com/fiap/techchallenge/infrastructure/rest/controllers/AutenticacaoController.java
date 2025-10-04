@@ -22,7 +22,7 @@ public class AutenticacaoController {
     private final IBuscarUsuario buscarUsuario;
     private final UsuarioPresenterHttp usuarioPresenterHttp;
 
-    @GetMapping("/regatar/usuario")
+    @GetMapping("/resgatar/usuario")
     public ResponseEntity<UsuarioResponseApp> execute(@RequestHeader String token) throws AuthException {
         buscarUsuario.execute(token);
         return ResponseEntity.status(HttpStatus.OK).body(usuarioPresenterHttp.get());
