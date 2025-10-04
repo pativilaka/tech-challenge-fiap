@@ -1,10 +1,10 @@
 package br.com.fiap.techchallenge.application.consulta.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record ReagendarConsultaRequestApp(
         Long consultaId,
-        LocalDate novoInicio,
-        LocalDate novoFim
+        LocalDateTime novoInicio,
+        LocalDateTime novoFim
 ) {
 }
