@@ -5,6 +5,7 @@ import br.com.fiap.techchallenge.application.consulta.dto.AgendarConsultaRequest
 import br.com.fiap.techchallenge.application.consulta.dto.ConsultaResponseApp;
 import br.com.fiap.techchallenge.application.consulta.mappers.ConsultaMapper;
 import br.com.fiap.techchallenge.application.consulta.ports.in.IAgendarConsulta;
+import br.com.fiap.techchallenge.application.consulta.ports.out.IConsultaProducer;
 import br.com.fiap.techchallenge.application.consulta.ports.out.IConsultaRepository;
 import br.com.fiap.techchallenge.application.consulta.ports.out.IUsuarioLeituraRepository;
 import br.com.fiap.techchallenge.application.consulta.ports.presenters.IConsultaPresenter;
@@ -18,12 +19,14 @@ public class AgendarConsultaUseCase implements IAgendarConsulta {
     private final IConsultaRepository repository;
     private final IConsultaPresenter presenter;
     private final IUsuarioLeituraRepository usuarioLeituraRepository;
+    private final IConsultaProducer producer;
 
     public AgendarConsultaUseCase(IConsultaRepository repository, IConsultaPresenter presenter,
-                                  IUsuarioLeituraRepository leituraRepository) {
+                                  IUsuarioLeituraRepository leituraRepository, IConsultaProducer producer) {
         this.repository = repository;
         this.presenter = presenter;
         this.usuarioLeituraRepository = leituraRepository;
+        this.producer = producer;
     }
 
     @Override
@@ -49,6 +52,7 @@ public class AgendarConsultaUseCase implements IAgendarConsulta {
 
         Consulta consulta = ConsultaMapper.toDomain(requestApp);
         consulta = repository.save(consulta);
+        producer.enviarEventoConsulta(consulta);
 
         ConsultaResponseApp responseApp = ConsultaMapper.toApp(consulta);
         presenter.present(responseApp);
