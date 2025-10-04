@@ -19,7 +19,7 @@ public class Usuario {
     private Endereco endereco;
     private TipoUsuario tipoUsuario;
 
-    Usuario(
+    public Usuario(
             Long id,
             String nome,
             String cpf,
@@ -43,6 +43,8 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
         validar();
     }
+
+    public Usuario() {}
 
     private void validar() {
         DomainValidation.notBlank(nome, "nome");
