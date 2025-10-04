@@ -11,7 +11,6 @@ import br.com.fiap.techchallenge.infrastructure.persistence.jpa.adapter.UsuarioL
 import br.com.fiap.techchallenge.infrastructure.persistence.jpa.mapper.ConsultaEntityMapper;
 import br.com.fiap.techchallenge.infrastructure.persistence.jpa.repository.ConsultaJpaRepository;
 import br.com.fiap.techchallenge.infrastructure.persistence.jpa.repository.UsuarioJpaRepository;
-import br.com.fiap.techchallenge.infrastructure.rest.presenters.ConsultaPresenterHttp;
 import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +39,9 @@ public class BeanConfig {
     @Bean
     public IAgendarConsulta agendarConsulta(IConsultaRepository consultaRepo,
                                             IConsultaPresenter presenter,
-                                            IUsuarioLeituraRepository usuarioLeituraRepo) {
-        return new AgendarConsultaUseCase(consultaRepo, presenter, usuarioLeituraRepo);
+                                            IUsuarioLeituraRepository usuarioLeituraRepo,
+                                            IConsultaProducer producer) {
+        return new AgendarConsultaUseCase(consultaRepo, presenter, usuarioLeituraRepo, producer);
     }
 
     @Bean
