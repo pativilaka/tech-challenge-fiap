@@ -9,6 +9,8 @@ import br.com.fiap.infraestructure.consulta.presenter.ConsultaGraphPresenter;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -28,10 +30,9 @@ public class ConsultaController {
 
 
     @QueryMapping
-    @PreAuthorize("hasRole('PACIENTE')")
-    public List<ConsultaResponse> consultasPorUsuario(Authentication authentication) {
-
-        final var usuarioId =  Integer.valueOf(authentication.getName());
+    @PreAuthorize("hasRole('PACIENTE') or hasRole('MEDICO')")
+    public List<ConsultaResponse> consultasPorUsuario(BearerTokenAuthentication authentication) {
+        Integer usuarioId = (Integer) authentication.getTokenAttributes().get("id");
 
         List<ConsultaResponse> response = new ArrayList<>();
         List<ListConsultaOutput> consultaResponses = consultaUseCase.execute(usuarioId);

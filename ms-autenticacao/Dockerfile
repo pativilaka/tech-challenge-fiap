@@ -27,4 +27,4 @@ COPY --from=build /app/target/*.jar app.jar
 # Define o comando padrão para rodar a aplicação
 CMD ["java", "-jar", "app.jar"]
 
-EXPOSE 8083:8083
+EXPOSE 8080:8080

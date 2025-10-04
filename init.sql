@@ -53,14 +53,14 @@ CREATE TABLE consultas
     CONSTRAINT fk_consulta_paciente FOREIGN KEY (paciente_id) REFERENCES usuarios(id),
     CONSTRAINT fk_consulta_medico FOREIGN KEY (medico_id) REFERENCES usuarios(id)
 );
-
+-- Senha 123456
 INSERT INTO usuarios
     (nome, cpf, data_de_nascimento, email, senha, tipo_usuario, telefone)
 VALUES
-    ('Dr. João Silva', '03005175057', '1980-05-15', 'joao@email.com', '$2a$12$MRPaPizvzQSC4qJJIK3N3uXnigIPMfYNVkDjPHUecG52cN9aL8v/q', 'MEDICO', '11 98765-4321'),
-    ('Maria Oliveira', '51547389001', '1990-08-22', 'maria@email.com', '$2a$12$8.Nrp.ByAEikJrHpZJcJEuWYzIwaepLBnTAzlqvlibADq/EdskFQu', 'PACIENTE', '11 98765-4321'),
-    ('Enf. Carlos Souza', '89524329085', '1985-03-10', 'carlos@email.com', '$2a$12$.9cnS93Vj7p3qPow5nUuPO9AwUDL3TLqZq2Ky6kzH0lnHl4A1KOIK', 'ENFERMEIRO', '11 98765-4321'),
-    ('Ana Pereira', '29913698090', '1992-11-30', 'ana@email.com', '$2a$12$TMzPcKQDAVOtDAHuYG4cJuRevS1anNd4pz7SMuVi4/Nx/W9DURaiu', 'PACIENTE', '11 98765-4321');
+    ('Dr. João Silva', '03005175057', '1980-05-15', 'joao@email.com', '$2a$12$OP8oRA2P0bCFdP275gMYreJpgdzlrolgaiZYJPCnVWBBE/YDkptKO', 'MEDICO', '11 98765-4321'),
+    ('Maria Oliveira', '51547389001', '1990-08-22', 'maria@email.com', '$2a$12$VPjg.w3Z2qPVE3aew73vC.RO3SMlkbuU9Zo1UJmYs8wipspchHjCO', 'PACIENTE', '11 98765-4321'),
+    ('Enf. Carlos Souza', '89524329085', '1985-03-10', 'carlos@email.com', '$2a$12$sePKOsJcYwZf1sa6F4UJauDhKcceYFjT4uj48DHjM95/7N5tYCN4m', 'ENFERMEIRO', '11 98765-4321'),
+    ('Ana Pereira', '29913698090', '1992-11-30', 'ana@email.com', '$2a$12$UN3HQD23ZsZ7R3a7XlSG8.ov9zJbPqR4fvbMEzdIZk9W7rWJcCZHm', 'PACIENTE', '11 98765-4321');
 
 INSERT INTO medicos
     (id, crm, especialidade)

@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface IUsuarioRepository {
     Optional<Usuario> findByEmail(String username);
+
+    Optional<Usuario> findById(Long id);
 }
