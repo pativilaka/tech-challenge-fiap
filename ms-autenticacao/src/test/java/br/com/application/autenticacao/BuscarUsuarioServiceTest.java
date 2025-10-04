@@ -67,7 +67,7 @@ class BuscarUsuarioServiceTest {
 
     @Test
     void deveExtrairUsernameDoToken() {
-        String username = service.getUserNameFromJwtToken(validToken);
+        String username = service.getEmailFromJwtToken(validToken);
         assertEquals("user@test.com", username);
     }
 
