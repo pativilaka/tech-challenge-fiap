@@ -4,18 +4,19 @@ import br.com.fiap.techchallenge.domain.comum.DomainException;
 import br.com.fiap.techchallenge.domain.comum.DomainValidation;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Consulta {
 
     private final Long id;
     private Long medicoId;
     private Long pacienteId;
-    private LocalDate inicio;
-    private LocalDate fim;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
     private StatusConsulta status;
 
-    private Consulta(Long id, Long medicoId, Long pacienteId, LocalDate inicio,
-                    LocalDate fim, StatusConsulta status) {
+    private Consulta(Long id, Long medicoId, Long pacienteId, LocalDateTime inicio,
+                     LocalDateTime fim, StatusConsulta status) {
         this.id = id;
         this.medicoId = medicoId;
         this.pacienteId = pacienteId;
@@ -40,8 +41,8 @@ public class Consulta {
         DomainValidation.registros(medicoId, pacienteId);
     }
 
-    public static Consulta agendar(Long id, Long medicoId, Long pacienteId, LocalDate inicio,
-                                   LocalDate fim) {
+    public static Consulta agendar(Long id, Long medicoId, Long pacienteId, LocalDateTime inicio,
+                                   LocalDateTime fim) {
         return new Consulta(id, medicoId, pacienteId, inicio, fim, StatusConsulta.AGENDADA);
     }
 
@@ -49,8 +50,8 @@ public class Consulta {
      * Fábrica de HIDRATAÇÃO (reconstrução a partir do persistido).
      * Usa o status já salvo no banco, sem chamar iniciar()/concluir()/cancelar().
      */
-    public static Consulta rebuild(Long id, Long medicoId, Long pacienteId, LocalDate inicio,
-                                   LocalDate fim, StatusConsulta status) {
+    public static Consulta rebuild(Long id, Long medicoId, Long pacienteId, LocalDateTime inicio,
+                                   LocalDateTime fim, StatusConsulta status) {
         return new Consulta(id, medicoId, pacienteId, inicio, fim, status);
     }
 
@@ -69,7 +70,7 @@ public class Consulta {
         this.status = StatusConsulta.CANCELADA;
     }
 
-    public void reagendar(LocalDate novoInicio, LocalDate novoFim) {
+    public void reagendar(LocalDateTime novoInicio, LocalDateTime novoFim) {
         if (this.status == StatusConsulta.CONCLUIDA || this.status == StatusConsulta.CANCELADA) {
             throw new DomainException("Não é possível reagendar uma consulta finalizada.");
         }
@@ -113,11 +114,11 @@ public class Consulta {
         return pacienteId;
     }
 
-    public LocalDate getInicio() {
+    public LocalDateTime getInicio() {
         return inicio;
     }
 
-    public LocalDate getFim() {
+    public LocalDateTime getFim() {
         return fim;
     }
 

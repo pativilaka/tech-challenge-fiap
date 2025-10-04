@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -32,17 +33,17 @@ public class ConsultaEntity {
     private UsuarioEntity paciente;
 
     @Column(name = "data_inicio", nullable = false)
-    private LocalDate inicio;
+    private LocalDateTime inicio;
 
     @Column(name = "data_fim", nullable = false)
-    private LocalDate fim;
+    private LocalDateTime fim;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private StatusConsulta status;
 
     public ConsultaEntity(Long id, UsuarioEntity medico, UsuarioEntity paciente,
-                          LocalDate inicio, LocalDate fim, StatusConsulta status) {
+                          LocalDateTime inicio, LocalDateTime fim, StatusConsulta status) {
         this.id = id;
         this.medico = medico;
         this.paciente = paciente;

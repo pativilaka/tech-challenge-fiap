@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "medicos")
-@PrimaryKeyJoinColumn(name = "id_medico")
+@PrimaryKeyJoinColumn(name = "id")
 public class MedicoEntity extends UsuarioEntity {
 
     @Column(nullable = false, length = 30)
