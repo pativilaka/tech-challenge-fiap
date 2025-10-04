@@ -9,6 +9,7 @@ import br.com.fiap.techchallenge.infrastructure.rest.presenters.ConsultaPresente
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -26,12 +27,14 @@ public class ConsultaController {
     private final ConsultaPresenterHttp presenterHttp;
 
     @PostMapping
+    @PreAuthorize("hasRole('ENFERMEIRO')")
     public ResponseEntity<ConsultaResponseApp> agendar(@RequestBody AgendarConsultaRequestApp request) {
         agendar.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(presenterHttp.get());
     }
 
     @PutMapping("/{id}/reagendar")
+    @PreAuthorize("hasRole('ENFERMEIRO') or hasRole('MEDICO')")
     public ResponseEntity<ConsultaResponseApp> reagendar(@PathVariable Long id,
                                                          @RequestBody ReagendarConsultaRequestApp body) {
         ReagendarConsultaRequestApp req = new ReagendarConsultaRequestApp(id, body.novoInicio(), body.novoFim());
@@ -40,24 +43,28 @@ public class ConsultaController {
     }
 
     @PatchMapping("/{id}/iniciar")
+    @PreAuthorize("hasRole('MEDICO')")
     public ResponseEntity<ConsultaResponseApp> iniciar(@PathVariable Long id) {
         iniciar.execute(id);
         return ResponseEntity.ok((presenterHttp.get()));
     }
 
     @PatchMapping("/{id}/concluir")
+    @PreAuthorize("hasRole('MEDICO')")
     public ResponseEntity<ConsultaResponseApp> concluir(@PathVariable Long id) {
         concluir.execute(id);
         return ResponseEntity.ok(presenterHttp.get());
     }
 
     @PatchMapping("/{id}/cancelar")
+    @PreAuthorize("hasRole('MEDICO')")
     public ResponseEntity<ConsultaResponseApp> cancelar(@PathVariable Long id) {
         cancelar.execute(id);
         return ResponseEntity.ok(presenterHttp.get());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('PACIENTE')")
     public ResponseEntity<ConsultaResponseApp> buscarPorId(@PathVariable Long id) {
         buscarPorId.execute(id);
         return ResponseEntity.ok(presenterHttp.get());

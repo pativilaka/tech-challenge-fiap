@@ -19,4 +19,21 @@ public record CriarUsuarioRequestApp(
         String coren,
         String planoSaude
 ) {
+    public CriarUsuarioRequestApp withEncodedSenha(String encodedSenha) {
+        return new CriarUsuarioRequestApp(
+                this.nome,
+                this.cpf,
+                this.dataNascimento,
+                this.email,
+                this.telefone,
+                this.login,
+                encodedSenha,
+                this.endereco,
+                this.tipoUsuario,
+                this.crm,
+                this.especialidade,
+                this.coren,
+                this.planoSaude
+        );
+    }
 }

@@ -9,6 +9,7 @@ import br.com.fiap.techchallenge.infrastructure.rest.presenters.UsuarioPresenter
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -30,6 +31,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ENFERMEIRO')")
     public ResponseEntity<UsuarioResponseApp> atualizar(@PathVariable Long id,
                                           @RequestBody AtualizarUsuarioRequestApp request) {
 
@@ -38,18 +40,21 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ENFERMEIRO')")
     public ResponseEntity<UsuarioResponseApp> buscarPorId(@PathVariable Long id) {
         buscarUsuarioPorId.execute(id);
         return ResponseEntity.ok(presenterHttp.get());
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ENFERMEIRO')")
     public ResponseEntity<ListaUsuariosResponseApp> listarTodos() {
         listarUsuarios.execute();
         return ResponseEntity.ok(presenterHttp.getLista());
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ENFERMEIRO')")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         deletarUsuario.execute(id);
         return ResponseEntity.noContent().build();
