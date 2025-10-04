@@ -53,7 +53,7 @@ CREATE TABLE consultas
     CONSTRAINT fk_consulta_paciente FOREIGN KEY (paciente_id) REFERENCES usuarios(id),
     CONSTRAINT fk_consulta_medico FOREIGN KEY (medico_id) REFERENCES usuarios(id)
 );
-
+-- Senha 123456
 INSERT INTO usuarios
     (nome, cpf, data_de_nascimento, email, senha, tipo_usuario, telefone)
 VALUES
