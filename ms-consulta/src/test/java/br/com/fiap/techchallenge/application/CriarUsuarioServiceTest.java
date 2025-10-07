@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -30,6 +31,9 @@ public class CriarUsuarioServiceTest {
     IUsuarioRepository repository;
     @Mock
     IUsuarioPresenter presenter;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     CriarUsuarioService service;
