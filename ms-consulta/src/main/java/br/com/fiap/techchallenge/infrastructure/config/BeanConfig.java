@@ -48,8 +48,9 @@ public class BeanConfig {
 
     @Bean
     public IReagendarConsulta reagendarConsulta(IConsultaRepository consultaRepo,
-                                                IConsultaPresenter presenter) {
-        return new ReagendarConsultaUseCase(consultaRepo, presenter);
+                                                IConsultaPresenter presenter,
+                                                IConsultaProducer producer) {
+        return new ReagendarConsultaUseCase(consultaRepo, presenter, producer);
     }
 
     @Bean

@@ -102,7 +102,7 @@ public class UsuarioTest {
     @Test
     @DisplayName("Não deve permitir CPF inválido no construtor")
     void naoPermitirCpfInvalido_noConstrutor() {
-        var builder = builderPaciente().cpf("12345678900");
+        var builder = builderPaciente().cpf("123456789001");
 
         var ex = assertThrows(DomainException.class, builder::build);
 

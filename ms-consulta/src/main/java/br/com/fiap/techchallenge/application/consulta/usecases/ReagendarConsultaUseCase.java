@@ -5,6 +5,7 @@ import br.com.fiap.techchallenge.application.consulta.dto.ConsultaResponseApp;
 import br.com.fiap.techchallenge.application.consulta.dto.ReagendarConsultaRequestApp;
 import br.com.fiap.techchallenge.application.consulta.mappers.ConsultaMapper;
 import br.com.fiap.techchallenge.application.consulta.ports.in.IReagendarConsulta;
+import br.com.fiap.techchallenge.application.consulta.ports.out.IConsultaProducer;
 import br.com.fiap.techchallenge.application.consulta.ports.out.IConsultaRepository;
 import br.com.fiap.techchallenge.application.consulta.ports.presenters.IConsultaPresenter;
 import br.com.fiap.techchallenge.domain.comum.DomainException;
@@ -14,10 +15,12 @@ public class ReagendarConsultaUseCase implements IReagendarConsulta {
 
     private final IConsultaRepository repository;
     private final IConsultaPresenter presenter;
+    private final IConsultaProducer producer;
 
-    public ReagendarConsultaUseCase(IConsultaRepository repository, IConsultaPresenter presenter) {
+    public ReagendarConsultaUseCase(IConsultaRepository repository, IConsultaPresenter presenter, IConsultaProducer producer) {
         this.repository = repository;
         this.presenter = presenter;
+        this.producer = producer;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ReagendarConsultaUseCase implements IReagendarConsulta {
 
         consulta.reagendar(requestApp.novoInicio(), requestApp.novoFim());
         consulta = repository.update(consulta);
-
+        this.producer.enviarEventoConsulta(consulta);
         ConsultaResponseApp responseApp = ConsultaMapper.toApp(consulta);
         presenter.present(responseApp);
 
