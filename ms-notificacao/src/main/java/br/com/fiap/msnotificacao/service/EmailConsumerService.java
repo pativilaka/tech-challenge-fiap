@@ -41,7 +41,7 @@ public class EmailConsumerService {
 
     private boolean validar(EventNotificationEmailDTO mensagem) {
         String idempotencyKey = "notificacao_consulta:" + mensagem.idConsulta() + ":" + mensagem.tipoEvento();
-        if(!checker.validarERegistrarEvento(idempotencyKey, Duration.ofHours(1))) {
+        if(!checker.validarERegistrarEvento(idempotencyKey, Duration.ofMinutes(5))) {
             log.warn("Evento de ID {} já processado. Ignorando mensagem duplicada.", mensagem.idConsulta());
             return true;
         }
